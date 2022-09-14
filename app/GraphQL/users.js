@@ -8,9 +8,12 @@ export const typeDefs = gql`
     }
 
     type User {
-        id: ID!
-        email: String
+        id: ID
+        phone: String
         name: String
+    }
+    type Mutation {
+        createUser(phone: String, name: String, password: String): User
     }
 `
 
@@ -18,5 +21,14 @@ export const resolvers = {
     Query: {
         users: async () => db.users.findAll(),
         user: async (obj, args, context, info) => db.users.findByPk(args.id),
+    },
+    Mutation: {
+        createUser: async (context, user) => {
+            const newUser = {
+                ...user,
+                password: Buffer.from(user.password).toString('base64'),
+            }
+            return db.users.create(newUser)
+        },
     },
 }

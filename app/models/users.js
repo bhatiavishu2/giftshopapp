@@ -14,14 +14,24 @@ module.exports = function (sequelize, DataTypes) {
                 type: DataTypes.STRING(256),
                 allowNull: false,
             },
-            email: {
+            phone: {
+                type: DataTypes.STRING(256),
+                allowNull: false,
+            },
+            password: {
                 type: DataTypes.STRING(256),
                 allowNull: false,
             },
         },
         {
-            tableName: 'users',
+            tableName: 'users3',
             timestamps: false,
+            indexes: [
+                {
+                    unique: true,
+                    fields: ['phone'],
+                },
+            ],
         },
     )
     usersModel.sync()
