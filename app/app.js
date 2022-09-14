@@ -21,6 +21,6 @@ server.applyMiddleware({ app })
 
 app.get('/', (req, res) => res.send('Hello World!'))
 
-app.listen({ port: 5000 }, () =>
-    console.log(`🚀 Server ready at http://localhost:5000`),
+app.listen({ port: 3003 }, () =>
+    console.log(`🚀 Server ready at http://localhost:3003`),
 )

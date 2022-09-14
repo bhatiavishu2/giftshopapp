@@ -32,5 +32,8 @@
     "devDependencies": {
         "webpack": "^4.29.4",
         "webpack-node-externals": "^1.7.2"
+    },
+    "engines": {
+        "node": "14.x"
     }
 }
