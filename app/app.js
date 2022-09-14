@@ -15,6 +15,11 @@ const server = new ApolloServer({
         require('./GraphQL/users'),
         require('./GraphQL/priorities'),
     ],
+    playground: {
+        settings: {
+            'editor.theme': 'light',
+        },
+    },
 })
 
 server.applyMiddleware({ app })
