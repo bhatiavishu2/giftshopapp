@@ -21,4 +21,4 @@ server.applyMiddleware({ app })
 
 app.get('/', (req, res) => res.send('Hello World!'))
 
-app.listen(80, () => console.log(`🚀 Server ready at http://localhost:3003`))
+app.listen(3003, () => console.log(`🚀 Server ready at http://localhost:3003`))
