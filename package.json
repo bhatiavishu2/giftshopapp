@@ -8,7 +8,7 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "build": "webpack",
         "build:watch": "webpack --watch",
-        "run": "node ./dist/app.js",
+        "run:app": "node ./dist/app.js",
         "run:watch": "nodemon ./dist/app.js"
     },
     "author": "Dirk H. Wolthuis",
