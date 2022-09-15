@@ -14,6 +14,9 @@ const server = new ApolloServer({
         require('./GraphQL/status'),
         require('./GraphQL/users'),
         require('./GraphQL/priorities'),
+        require('./GraphQL/roles'),
+        require('./GraphQL/permissions'),
+        require('./GraphQL/rolesMapping'),
     ],
     playground: {
         settings: {

@@ -1,8 +1,8 @@
 /* jshint indent: 1 */
 
 module.exports = function (sequelize, DataTypes) {
-    const statusModel = sequelize.define(
-        'status',
+    const permissionsModel = sequelize.define(
+        'permissions',
         {
             id: {
                 type: DataTypes.INTEGER(10).UNSIGNED,
@@ -10,21 +10,17 @@ module.exports = function (sequelize, DataTypes) {
                 primaryKey: true,
                 autoIncrement: true,
             },
-            slug: {
-                type: DataTypes.STRING(64),
-                allowNull: false,
-            },
             name: {
                 type: DataTypes.STRING(256),
                 allowNull: false,
             },
         },
         {
-            tableName: 'status',
+            tableName: 'permissions',
             timestamps: false,
         },
     )
-    statusModel.sync()
+    permissionsModel.sync()
 
-    return statusModel
+    return permissionsModel
 }

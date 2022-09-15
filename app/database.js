@@ -29,6 +29,9 @@ let models = [
     require('./models/status.js'),
     require('./models/tickets.js'),
     require('./models/users.js'),
+    require('./models/roles.js'),
+    require('./models/permissions.js'),
+    require('./models/rolesMapping.js'),
 ]
 
 // Initialize models
@@ -39,7 +42,9 @@ models.forEach((model) => {
 
 // Apply associations
 Object.keys(db).forEach((key) => {
+    console.log('dbkey1---', db[key])
     if ('associate' in db[key]) {
+        console.log('dbkey1--- associate', db[key])
         db[key].associate(db)
     }
 })

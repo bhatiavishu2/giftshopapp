@@ -12,7 +12,7 @@ export const typeDefs = gql`
         phone: String
         name: String
     }
-    type Mutation {
+    extend type Mutation {
         createUser(phone: String, name: String, password: String): User
     }
 `

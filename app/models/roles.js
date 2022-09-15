@@ -1,8 +1,8 @@
 /* jshint indent: 1 */
 
 module.exports = function (sequelize, DataTypes) {
-    const usersModel = sequelize.define(
-        'users',
+    const rolesModel = sequelize.define(
+        'roles',
         {
             id: {
                 type: DataTypes.INTEGER(10).UNSIGNED,
@@ -14,26 +14,28 @@ module.exports = function (sequelize, DataTypes) {
                 type: DataTypes.STRING(256),
                 allowNull: false,
             },
-            phone: {
-                type: DataTypes.STRING(256),
-                allowNull: false,
-            },
-            password: {
+            permissions: {
                 type: DataTypes.STRING(256),
                 allowNull: false,
             },
         },
         {
-            tableName: 'users',
+            tableName: 'roles',
             timestamps: false,
-            indexes: [
-                {
-                    unique: true,
-                    fields: ['phone'],
-                },
-            ],
         },
     )
-    usersModel.sync()
-    return usersModel
+    rolesModel.sync()
+    // rolesModel.associate = (db) => {
+    //     db.users.belongsToMany(db.roles, {
+    //         through: 'rolesmapping',
+    //         sourceKey: 'id',
+    //         targetKey: 'id',
+    //     })
+    //     db.roles.belongsToMany(db.users, {
+    //         through: 'rolesmapping',
+    //         sourceKey: 'id',
+    //         targetKey: 'id',
+    //     })
+    // }
+    return rolesModel
 }
