@@ -4,9 +4,11 @@ const bodyParser = require('body-parser')
 const { ApolloServer } = require('apollo-server-express')
 const cors = require('cors')
 const app = express()
+const authmiddleware = require('./authmiddleware')
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cors())
+app.use(authmiddleware)
 
 const server = new ApolloServer({
     modules: [
@@ -25,7 +27,7 @@ const server = new ApolloServer({
         },
     },
     context: ({ req }) => ({
-        isLoggedIn: true,
+        ...req.user,
     }),
 })
 

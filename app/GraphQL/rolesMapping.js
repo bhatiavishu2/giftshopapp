@@ -36,8 +36,10 @@ export const resolvers = {
                 },
             })
         },
-        roleIds: async ({ dataValues }) => {
-            return dataValues.roleIds.split(',')
+        roleIds: async ({ dataValues, roleIDs }) => {
+            return dataValues
+                ? dataValues.roleIds.split(',')
+                : roleIds.split(',')
         },
         userDetails: async ({ dataValues }) => {
             return db.users.findByPk(Number(dataValues.userId))
@@ -56,7 +58,15 @@ export const resolvers = {
                 },
             })
             if (roleMappingData) {
-                return db.auth.update(newRoleMapping)
+                db.auth.update(newRoleMapping, {
+                    where: {
+                        id: roleMappingData.dataValues.id,
+                    },
+                })
+                return {
+                    ...roleMappingData.dataValues,
+                    newRoleMapping,
+                }
             }
 
             return db.rolesMapping.create(newRoleMapping)

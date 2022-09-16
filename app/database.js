@@ -43,9 +43,7 @@ models.forEach((model) => {
 
 // Apply associations
 Object.keys(db).forEach((key) => {
-    console.log('dbkey1---', db[key])
     if ('associate' in db[key]) {
-        console.log('dbkey1--- associate', db[key])
         db[key].associate(db)
     }
 })
