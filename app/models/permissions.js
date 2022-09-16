@@ -18,6 +18,12 @@ module.exports = function (sequelize, DataTypes) {
         {
             tableName: 'permissions',
             timestamps: false,
+            indexes: [
+                {
+                    unique: true,
+                    fields: ['name'],
+                },
+            ],
         },
     )
     permissionsModel.sync()

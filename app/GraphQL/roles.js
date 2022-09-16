@@ -9,9 +9,9 @@ export const typeDefs = gql`
 
     type Role {
         id: ID
-        permissions: String
-        permissionsValues: [String]
+        permissions: [String]
         name: String
+        permissionsDetails: [Permission]
     }
     extend type Mutation {
         createRole(name: String, permissions: [String], userId: ID): Role
@@ -20,29 +20,25 @@ export const typeDefs = gql`
 
 export const resolvers = {
     Query: {
-        roles: async () => {
-            const roles = await db.roles.findAll()
-            return roles.map(async (role) => {
-                const permissionsData = await db.permissions.findAll({
-                    where: {
-                        id: role.permissions
-                            .split(',')
-                            .map((permission) => Number(permission)),
-                    },
-                })
-
-                const permissionsValues = permissionsData.map(
-                    (permission) => permission.dataValues.name,
-                )
-                return {
-                    ...role.dataValues,
-                    permissionsValues,
-                }
-            })
+        roles: async (obj, args, context) => {
+            return db.roles.findAll()
         },
         role: async (obj, args, context, info) => db.roles.findByPk(args.id),
     },
-
+    Role: {
+        permissionsDetails: async ({ dataValues }) => {
+            return await db.permissions.findAll({
+                where: {
+                    id: dataValues.permissions
+                        .split(',')
+                        .map((permission) => Number(permission)),
+                },
+            })
+        },
+        permissions: async ({ dataValues }) => {
+            return dataValues.permissions.split(',')
+        },
+    },
     Mutation: {
         createRole: async (context, role) => {
             const newRole = {

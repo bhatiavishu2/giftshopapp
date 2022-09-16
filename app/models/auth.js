@@ -1,8 +1,8 @@
 /* jshint indent: 1 */
 
 module.exports = function (sequelize, DataTypes) {
-    const rolesModel = sequelize.define(
-        'roles',
+    const authModel = sequelize.define(
+        'auth',
         {
             id: {
                 type: DataTypes.INTEGER(10).UNSIGNED,
@@ -10,27 +10,31 @@ module.exports = function (sequelize, DataTypes) {
                 primaryKey: true,
                 autoIncrement: true,
             },
-            name: {
+            token: {
                 type: DataTypes.STRING(256),
                 allowNull: false,
             },
-            permissions: {
+            userId: {
                 type: DataTypes.STRING(256),
                 allowNull: false,
             },
         },
         {
-            tableName: 'roles',
+            tableName: 'auth',
             timestamps: false,
             indexes: [
                 {
                     unique: true,
-                    fields: ['name'],
+                    fields: ['token'],
+                },
+                {
+                    unique: true,
+                    fields: ['userId'],
                 },
             ],
         },
     )
-    rolesModel.sync()
+    authModel.sync()
 
-    return rolesModel
+    return authModel
 }

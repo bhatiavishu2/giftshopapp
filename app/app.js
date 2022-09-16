@@ -17,12 +17,16 @@ const server = new ApolloServer({
         require('./GraphQL/roles'),
         require('./GraphQL/permissions'),
         require('./GraphQL/rolesMapping'),
+        require('./GraphQL/auth'),
     ],
     playground: {
         settings: {
             'editor.theme': 'light',
         },
     },
+    context: ({ req }) => ({
+        isLoggedIn: true,
+    }),
 })
 
 server.applyMiddleware({ app })

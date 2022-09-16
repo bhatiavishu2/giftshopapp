@@ -32,6 +32,7 @@ let models = [
     require('./models/roles.js'),
     require('./models/permissions.js'),
     require('./models/rolesMapping.js'),
+    require('./models/auth.js'),
 ]
 
 // Initialize models

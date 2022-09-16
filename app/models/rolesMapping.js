@@ -22,6 +22,12 @@ module.exports = function (sequelize, DataTypes) {
         {
             tableName: 'rolesmapping',
             timestamps: false,
+            indexes: [
+                {
+                    unique: true,
+                    fields: ['userId'],
+                },
+            ],
         },
     )
 
