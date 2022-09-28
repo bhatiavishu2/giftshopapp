@@ -21,7 +21,6 @@ module.exports = function (sequelize, DataTypes) {
         },
         {
             tableName: 'priorities',
-            timestamps: false,
         },
     )
     propertiesModel.sync()

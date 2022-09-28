@@ -21,7 +21,6 @@ module.exports = function (sequelize, DataTypes) {
         },
         {
             tableName: 'status',
-            timestamps: false,
         },
     )
     statusModel.sync()

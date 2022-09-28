@@ -20,10 +20,11 @@ const server = new ApolloServer({
         require('./GraphQL/permissions'),
         require('./GraphQL/rolesMapping'),
         require('./GraphQL/auth'),
+        require('./GraphQL/products'),
     ],
     playground: {
         settings: {
-            'editor.theme': 'light',
+            'editor.theme': 'dark',
         },
     },
     context: ({ req }) => ({

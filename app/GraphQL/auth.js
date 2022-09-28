@@ -9,7 +9,7 @@ export const typeDefs = gql`
     }
 
     extend type Query {
-        context(token: String): RoleMapping
+        context(token: String!): RoleMapping
     }
     extend type Mutation {
         login(phone: String, password: String): Auth

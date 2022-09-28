@@ -1,8 +1,8 @@
 /* jshint indent: 1 */
 
 module.exports = function (sequelize, DataTypes) {
-    const authModel = sequelize.define(
-        'auth',
+    const productsModel = sequelize.define(
+        'products',
         {
             id: {
                 type: DataTypes.INTEGER(10).UNSIGNED,
@@ -10,31 +10,28 @@ module.exports = function (sequelize, DataTypes) {
                 primaryKey: true,
                 autoIncrement: true,
             },
-            token: {
+            name: {
                 type: DataTypes.STRING(256),
                 allowNull: false,
             },
-            userId: {
+            price: {
+                type: DataTypes.STRING(256),
+                allowNull: false,
+            },
+            images: {
+                type: DataTypes.STRING(512),
+                allowNull: false,
+            },
+            category: {
                 type: DataTypes.STRING(256),
                 allowNull: false,
             },
         },
         {
-            tableName: 'auth',
-
-            indexes: [
-                {
-                    unique: true,
-                    fields: ['token'],
-                },
-                {
-                    unique: true,
-                    fields: ['userId'],
-                },
-            ],
+            tableName: 'products',
         },
     )
-    authModel.sync()
+    productsModel.sync()
 
-    return authModel
+    return productsModel
 }

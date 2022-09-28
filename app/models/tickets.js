@@ -33,7 +33,6 @@ module.exports = function (sequelize, DataTypes) {
         },
         {
             tableName: 'tickets',
-            timestamps: false,
         },
     )
     ticketsModel.sync()

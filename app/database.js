@@ -33,6 +33,8 @@ let models = [
     require('./models/permissions.js'),
     require('./models/rolesMapping.js'),
     require('./models/auth.js'),
+    require('./models/products.js'),
+    require('./models/images.js'),
 ]
 
 // Initialize models
