@@ -31,7 +31,7 @@ export const resolvers = {
             db.products.findByPk(args.id),
     },
     Mutation: {
-        createPermission: async (context, product) => {
+        createProduct: async (context, product) => {
             return db.products.create(product)
         },
     },

@@ -3,11 +3,11 @@ const Sequelize = require('sequelize')
 var db = {}
 
 const sequelize = new Sequelize(
-    'test_1234567890v',
-    'test_1234567890v',
-    'test_1234567890v',
+    'u157971984_test',
+    'u157971984_test',
+    'Test12345',
     {
-        host: 'db4free.net',
+        host: 'bbeventgift.shop',
         port: '3306',
         dialect: 'mysql',
         define: {
