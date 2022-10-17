@@ -1,8 +1,8 @@
 /* jshint indent: 1 */
 
 module.exports = function (sequelize, DataTypes) {
-    const productsModel = sequelize.define(
-        'products',
+    const categoriesModel = sequelize.define(
+        'categories',
         {
             id: {
                 type: DataTypes.INTEGER(10).UNSIGNED,
@@ -14,29 +14,14 @@ module.exports = function (sequelize, DataTypes) {
                 type: DataTypes.STRING(256),
                 allowNull: false,
             },
-            price: {
+            categoryImage: {
                 type: DataTypes.STRING(256),
                 allowNull: false,
-            },
-            wholeSalePrice: {
-                type: DataTypes.STRING(256),
-                allowNull: false,
-            },
-            subCategory: {
-                type: DataTypes.STRING(256),
-                allowNull: false,
-            },
-            images: {
-                type: DataTypes.STRING(512),
-                allowNull: false,
-            },
-            productDescription: {
-                type: DataTypes.STRING(512),
-                allowNull: true,
             },
         },
         {
-            tableName: 'products',
+            tableName: 'categories',
+
             indexes: [
                 {
                     unique: true,
@@ -45,7 +30,7 @@ module.exports = function (sequelize, DataTypes) {
             ],
         },
     )
-    productsModel.sync()
+    categoriesModel.sync()
 
-    return productsModel
+    return categoriesModel
 }

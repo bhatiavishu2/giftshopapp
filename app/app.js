@@ -23,6 +23,8 @@ const server = new ApolloServer({
         require('./GraphQL/rolesMapping'),
         require('./GraphQL/auth'),
         require('./GraphQL/products'),
+        require('./GraphQL/categories'),
+        require('./GraphQL/subCategories'),
     ],
     playground: {
         settings: {

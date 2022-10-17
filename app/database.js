@@ -35,6 +35,8 @@ let models = [
     require('./models/auth.js'),
     require('./models/products.js'),
     require('./models/images.js'),
+    require('./models/categories'),
+    require('./models/subCategories'),
 ]
 
 // Initialize models
