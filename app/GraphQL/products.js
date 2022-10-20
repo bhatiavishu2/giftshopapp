@@ -15,6 +15,7 @@ export const typeDefs = gql`
         images: [String]
         subCategory: String
         productDescription: String
+        shippingCharges: String
         subCategoryDetails: SubCategory
     }
     extend type Mutation {
@@ -25,6 +26,7 @@ export const typeDefs = gql`
             images: [String]!
             subCategory: String!
             productDescription: String!
+            shippingCharges: String!
         ): Product
     }
 `

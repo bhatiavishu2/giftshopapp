@@ -18,6 +18,10 @@ module.exports = function (sequelize, DataTypes) {
                 type: DataTypes.STRING(256),
                 allowNull: false,
             },
+            shippingCharges: {
+                type: DataTypes.STRING(256),
+                allowNull: false,
+            },
             wholeSalePrice: {
                 type: DataTypes.STRING(256),
                 allowNull: false,
