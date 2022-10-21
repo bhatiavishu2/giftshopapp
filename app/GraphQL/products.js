@@ -5,6 +5,7 @@ export const typeDefs = gql`
     extend type Query {
         products: [Product]
         product(id: ID!): Product
+        productsByCategory(categoryId: ID!): [Product]
     }
 
     type Product {
@@ -36,6 +37,21 @@ export const resolvers = {
         products: async () => db.products.findAll(),
         product: async (obj, args, context, info) =>
             db.products.findByPk(args.id),
+        productsByCategory: async (obj, args, context, info) => {
+            const subCategories = await db.subCategories.findAll({
+                where: {
+                    category: args.categoryId,
+                },
+            })
+
+            return await db.products.findAll({
+                where: {
+                    subCategory: subCategories.map((subCategory) =>
+                        subCategory.id.toString(),
+                    ),
+                },
+            })
+        },
     },
     Product: {
         subCategoryDetails: async ({ dataValues }) => {
