@@ -29,6 +29,17 @@ export const typeDefs = gql`
             productDescription: String!
             shippingCharges: String!
         ): Product
+        editProduct(
+            id: ID!
+            name: String!
+            price: String!
+            wholeSalePrice: String!
+            images: [String]!
+            subCategory: String!
+            productDescription: String!
+            shippingCharges: String!
+        ): [Int]
+        deleteProduct(id: ID): Boolean
     }
 `
 
@@ -55,7 +66,6 @@ export const resolvers = {
     },
     Product: {
         subCategoryDetails: async ({ dataValues }) => {
-            console.log('adfgsdfgsdf', dataValues.subCategory)
             return await db.subCategories.findByPk(
                 Number(dataValues.subCategory),
             )
@@ -71,6 +81,24 @@ export const resolvers = {
                 images: product.images.join(','),
             }
             return db.products.create(newProduct)
+        },
+        editProduct: async (context, { id, ...product }) => {
+            const newProduct = {
+                ...product,
+                images: product.images.join(','),
+            }
+            return db.products.update(newProduct, {
+                where: {
+                    id,
+                },
+            })
+        },
+        deleteProduct: async (context, args) => {
+            return db.products.destroy({
+                where: {
+                    id: Number(args.id),
+                },
+            })
         },
     },
 }

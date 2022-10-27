@@ -15,6 +15,12 @@ export const typeDefs = gql`
     }
     extend type Mutation {
         createCategory(name: String, categoryImage: String): Category
+        editCategory(
+            categoryId: ID!
+            name: String
+            categoryImage: String
+        ): [Int]
+        deleteCategory(id: ID): Boolean
     }
 `
 
@@ -38,6 +44,20 @@ export const resolvers = {
     Mutation: {
         createCategory: async (context, category) => {
             return db.categories.create(category)
+        },
+        editCategory: async (context, { categoryId: id, ...category }) => {
+            return db.categories.update(category, {
+                where: {
+                    id,
+                },
+            })
+        },
+        deleteCategory: async (context, args) => {
+            return db.categories.destroy({
+                where: {
+                    id: Number(args.id),
+                },
+            })
         },
     },
 }
