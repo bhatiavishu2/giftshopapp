@@ -14,7 +14,7 @@ export const typeDefs = gql`
         permissionsDetails: [Permission]
     }
     extend type Mutation {
-        createRole(name: String, permissions: [String], userId: ID): Role
+        createRole(name: String, permissions: [String]): Role
     }
 `
 
