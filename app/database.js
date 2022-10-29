@@ -7,7 +7,7 @@ const sequelize = new Sequelize(
     'u769008750_giftshop',
     'Giftshop12345',
     {
-        host: 'bbeventgift.shop',
+        host: 'mbgroup.shop',
         port: '3306',
         dialect: 'mysql',
         define: {
