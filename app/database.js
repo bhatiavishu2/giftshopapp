@@ -3,9 +3,9 @@ const Sequelize = require('sequelize')
 var db = {}
 
 const sequelize = new Sequelize(
-    'u157971984_test',
-    'u157971984_test',
-    'Test12345',
+    'u769008750_giftshop',
+    'u769008750_giftshop',
+    'Giftshop12345',
     {
         host: 'bbeventgift.shop',
         port: '3306',
