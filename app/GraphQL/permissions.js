@@ -13,6 +13,8 @@ export const typeDefs = gql`
     }
     extend type Mutation {
         createPermission(name: String): Permission
+        editPermission(id: ID!, name: String): [Int]
+        deletePermission(id: ID): Boolean
     }
 `
 
@@ -25,6 +27,20 @@ export const resolvers = {
     Mutation: {
         createPermission: async (context, permission) => {
             return db.permissions.create(permission)
+        },
+        editPermission: async (context, { id, ...permission }) => {
+            return db.permissions.update(permission, {
+                where: {
+                    id,
+                },
+            })
+        },
+        deletePermission: async (context, args) => {
+            return db.permissions.destroy({
+                where: {
+                    id: Number(args.id),
+                },
+            })
         },
     },
 }

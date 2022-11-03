@@ -15,6 +15,8 @@ export const typeDefs = gql`
     }
     extend type Mutation {
         createRole(name: String, permissions: [String]): Role
+        editRole(id: ID!, name: String, permissions: [String]): [Int]
+        deleteRole(id: ID): Boolean
     }
 `
 
@@ -46,6 +48,24 @@ export const resolvers = {
                 permissions: role.permissions.join(','),
             }
             return db.roles.create(newRole)
+        },
+        editRole: async (context, { id, ...role }) => {
+            const newRole = {
+                ...role,
+                permissions: role.permissions.join(','),
+            }
+            return db.roles.update(newRole, {
+                where: {
+                    id,
+                },
+            })
+        },
+        deleteRole: async (context, args) => {
+            return db.roles.destroy({
+                where: {
+                    id: Number(args.id),
+                },
+            })
         },
     },
 }
