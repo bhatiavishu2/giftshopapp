@@ -26,7 +26,6 @@ export const resolvers = {
     },
     SubCategory: {
         categoryDetails: async ({ dataValues }) => {
-            console.log('asdasd', dataValues.category)
             return await db.categories.findByPk(Number(dataValues.category))
         },
     },
