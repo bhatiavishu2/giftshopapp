@@ -57,8 +57,9 @@ export const resolvers = {
                     userId: roleMapping.userId,
                 },
             })
+            console.log(newRoleMapping, roleMappingData.dataValues.id)
             if (roleMappingData) {
-                db.auth.update(newRoleMapping, {
+                db.rolesMapping.update(newRoleMapping, {
                     where: {
                         id: roleMappingData.dataValues.id,
                     },
