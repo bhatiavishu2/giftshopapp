@@ -17,6 +17,7 @@ export const typeDefs = gql`
         subCategory: String
         productDescription: String
         shippingCharges: String
+        localShippingCharges: String
         subCategoryDetails: SubCategory
     }
     extend type Mutation {
@@ -28,6 +29,7 @@ export const typeDefs = gql`
             subCategory: String!
             productDescription: String!
             shippingCharges: String!
+            localShippingCharges: String
         ): Product
         editProduct(
             id: ID!
@@ -38,6 +40,7 @@ export const typeDefs = gql`
             subCategory: String!
             productDescription: String!
             shippingCharges: String!
+            localShippingCharges: String
         ): [Int]
         deleteProduct(id: ID): Boolean
     }

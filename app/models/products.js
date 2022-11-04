@@ -38,6 +38,10 @@ module.exports = function (sequelize, DataTypes) {
                 type: DataTypes.STRING(512),
                 allowNull: true,
             },
+            localShippingCharges: {
+                type: DataTypes.STRING(512),
+                allowNull: true,
+            },
         },
         {
             tableName: 'products',
