@@ -83,9 +83,10 @@ export const resolvers = {
             return db.products.create(newProduct)
         },
         editProduct: async (context, { id, ...product }) => {
+            const dbProduct = await db.products.findByPk(Number(id))
             const newProduct = {
                 ...product,
-                images: product.images.join(','),
+                images: dbProduct.images + ',' + product.images.join(','),
             }
             return db.products.update(newProduct, {
                 where: {
