@@ -21,7 +21,7 @@ const storageFile = multer.diskStorage({
 
 const uploadFile = multer({
     storage: storageFile,
-    limits: { fileSize: 5 * 1024 * 1024 },
+    limits: { fileSize: 20 * 1024 * 1024 },
 }).array('picture')
 
 const handleUploadFile = async (req, res) => {
