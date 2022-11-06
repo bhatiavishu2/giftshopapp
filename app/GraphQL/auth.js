@@ -48,7 +48,7 @@ export const resolvers = {
 
             const authData = await db.auth.findOne({
                 where: {
-                    id: userData.dataValues.id,
+                    userId: userData.id,
                 },
             })
             if (authData) {
