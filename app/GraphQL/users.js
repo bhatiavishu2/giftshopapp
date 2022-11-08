@@ -30,7 +30,7 @@ export const typeDefs = gql`
             password: String
             address: String
             companyName: String
-        ): User
+        ): [Int]
     }
 `
 
