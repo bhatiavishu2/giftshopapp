@@ -42,6 +42,10 @@ module.exports = function (sequelize, DataTypes) {
                 type: DataTypes.STRING(512),
                 allowNull: true,
             },
+            previewFile: {
+                type: DataTypes.STRING(512),
+                allowNull: true,
+            },
         },
         {
             tableName: 'products',
