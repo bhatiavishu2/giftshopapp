@@ -22,6 +22,14 @@ module.exports = function (sequelize, DataTypes) {
                 type: DataTypes.STRING(256),
                 allowNull: false,
             },
+            companyName: {
+                type: DataTypes.STRING(256),
+                allowNull: true,
+            },
+            address: {
+                type: DataTypes.STRING(256),
+                allowNull: true,
+            },
         },
         {
             tableName: 'users',

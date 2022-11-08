@@ -11,9 +11,17 @@ export const typeDefs = gql`
         id: ID
         phone: String
         name: String
+        address: String
+        companyName: String
     }
     extend type Mutation {
-        createUser(phone: String, name: String, password: String): User
+        createUser(
+            phone: String
+            name: String
+            password: String
+            address: String
+            companyName: String
+        ): User
     }
 `
 
