@@ -22,6 +22,15 @@ export const typeDefs = gql`
             address: String
             companyName: String
         ): User
+
+        editUser(
+            id: ID!
+            phone: String
+            name: String
+            password: String
+            address: String
+            companyName: String
+        ): User
     }
 `
 
@@ -37,6 +46,18 @@ export const resolvers = {
                 password: Buffer.from(user.password).toString('base64'),
             }
             return db.users.create(newUser)
+        },
+        editUser: async (context, { id, ...user }) => {
+            const dbUser = await db.users.findByPk(Number(id))
+            const newUser = {
+                ...dbUser,
+                ...user,
+            }
+            return db.users.update(newUser, {
+                where: {
+                    id,
+                },
+            })
         },
     },
 }
