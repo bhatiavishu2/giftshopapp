@@ -6,6 +6,7 @@ export const typeDefs = gql`
         products: [Product]
         product(id: ID!): Product
         productsByCategory(categoryId: ID!): [Product]
+        latestProducts(limit: Int): [Product]
     }
 
     type Product {
@@ -67,6 +68,12 @@ export const resolvers = {
                         subCategory.id.toString(),
                     ),
                 },
+            })
+        },
+        latestProducts: async (obj, args) => {
+            return db.products.findAll({
+                limit: args.limit,
+                order: [['updatedAt', 'DESC']],
             })
         },
     },
