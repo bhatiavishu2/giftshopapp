@@ -48,7 +48,6 @@ app.post('/file/upload', async (req, res) => {
     } catch (e) {
         return res.status(422).json({ errors: [e.message] })
     }
-    console.log('uploadResult---', uploadResult)
     const uploadedFile = uploadResult.file
 
     const { files } = uploadResult
