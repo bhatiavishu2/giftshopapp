@@ -29,12 +29,12 @@ module.exports = function (sequelize, DataTypes) {
             indexes: [
                 {
                     unique: true,
-                    fields: ['bannerUrl', 'merchantBannerUrl', 'mobileBannerUrls'],
+                    fields: ['bannerUrls', 'merchantBannerUrls', 'mobileBannerUrls'],
                 },
             ],
         },
     )
-    bannerModel.sync()
+    bannersModel.sync()
 
-    return bannerModel
+    return bannersModel
 }
