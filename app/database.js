@@ -37,6 +37,7 @@ let models = [
     require('./models/images.js'),
     require('./models/categories'),
     require('./models/subCategories'),
+    require('./models/banner'),
 ]
 
 // Initialize models
