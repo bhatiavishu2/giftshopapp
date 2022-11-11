@@ -8,10 +8,12 @@ export const typeDefs = gql`
 
     type Banner {
         id: ID
-        bannerUrl: String
+        bannerUrls: String
+        merchantBannerUrls: String
+        mobileBannerUrls: String
     }
     extend type Mutation {
-        createBanner(bannerUrl: String): Banner
+        createBanner(bannerUrls: String!, merchantBannerUrls: String!, mobileBannerUrls: String!): Banner
     }
 `
 

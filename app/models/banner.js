@@ -1,8 +1,8 @@
 /* jshint indent: 1 */
 
 module.exports = function (sequelize, DataTypes) {
-    const bannerModel = sequelize.define(
-        'banner',
+    const bannersModel = sequelize.define(
+        'banners',
         {
             id: {
                 type: DataTypes.INTEGER(10).UNSIGNED,
@@ -10,18 +10,26 @@ module.exports = function (sequelize, DataTypes) {
                 primaryKey: true,
                 autoIncrement: true,
             },
-            bannerUrl: {
+            bannerUrls: {
+                type: DataTypes.STRING(256),
+                allowNull: false,
+            },
+            merchantBannerUrls: {
+                type: DataTypes.STRING(256),
+                allowNull: false,
+            },
+            mobileBannerUrls: {
                 type: DataTypes.STRING(256),
                 allowNull: false,
             },
         },
         {
-            tableName: 'banner',
+            tableName: 'banners',
 
             indexes: [
                 {
                     unique: true,
-                    fields: ['bannerUrl'],
+                    fields: ['bannerUrl', 'merchantBannerUrl', 'mobileBannerUrls'],
                 },
             ],
         },
