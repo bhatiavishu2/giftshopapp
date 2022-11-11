@@ -19,14 +19,14 @@ export const typeDefs = gql`
 
 export const resolvers = {
     Query: {
-        banners: async (obj, args) =>   db.banner.findAll({
+        banners: async (obj, args) =>   db.banners.findAll({
             limit: args.limit,
             order: [['updatedAt', 'DESC']],
         })
     },
     Mutation: {
         createBanner: async (context, permission) => {
-            return db.banner.create(permission)
+            return db.banners.create(permission)
         },
        
     },
