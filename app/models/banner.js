@@ -18,6 +18,10 @@ module.exports = function (sequelize, DataTypes) {
                 type: DataTypes.STRING(256),
                 allowNull: false,
             },
+            merchantMobileBannerUrls: {
+                type: DataTypes.STRING(256),
+                allowNull: false,
+            },
             mobileBannerUrls: {
                 type: DataTypes.STRING(256),
                 allowNull: false,
@@ -29,7 +33,7 @@ module.exports = function (sequelize, DataTypes) {
             indexes: [
                 {
                     unique: true,
-                    fields: ['bannerUrls', 'merchantBannerUrls', 'mobileBannerUrls'],
+                    fields: ['bannerUrls', 'merchantBannerUrls', 'mobileBannerUrls', 'merchantMobileBannerUrls'],
                 },
             ],
         },
