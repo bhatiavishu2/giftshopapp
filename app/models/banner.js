@@ -30,12 +30,7 @@ module.exports = function (sequelize, DataTypes) {
         {
             tableName: 'banners',
 
-            indexes: [
-                {
-                    unique: true,
-                    fields: ['bannerUrls', 'merchantBannerUrls', 'mobileBannerUrls', 'merchantMobileBannerUrls'],
-                },
-            ],
+           
         },
     )
     bannersModel.sync()
