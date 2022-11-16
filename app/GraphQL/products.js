@@ -21,6 +21,7 @@ export const typeDefs = gql`
         localShippingCharges: String
         previewFile: String
         videoUrl: String
+        isOutOfStock: Boolean
         subCategoryDetails: SubCategory
     }
     extend type Mutation {
@@ -35,6 +36,7 @@ export const typeDefs = gql`
             localShippingCharges: String
             previewFile: String
             videoUrl: String
+            isOutOfStock: Boolean
         ): Product
         editProduct(
             id: ID!
@@ -48,6 +50,7 @@ export const typeDefs = gql`
             localShippingCharges: String
             previewFile: String
             videoUrl: String
+            isOutOfStock: Boolean
         ): [Int]
         deleteProduct(id: ID): Boolean
     }

@@ -50,6 +50,11 @@ module.exports = function (sequelize, DataTypes) {
                 type: DataTypes.STRING(512),
                 allowNull: true,
             },
+            isOutOfStock: {
+                type: DataTypes.BOOLEAN,
+                allowNull: false,
+                defaultValue: false,
+            },
         },
         {
             tableName: 'products',
