@@ -17,11 +17,13 @@ export const typeDefs = gql`
 
 export const resolvers = {
     Query: {
-        about: async () =>
-            db.about.findAll({
+        about: async () => {
+            const result = await db.contact.findAll({
                 limit: 1,
                 order: [['updatedAt', 'DESC']],
-            })[0],
+            })
+            return result[0].dataValues
+        },
     },
     Mutation: {
         createAbout: async (context, about) => {
