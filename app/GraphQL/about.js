@@ -18,7 +18,7 @@ export const typeDefs = gql`
 export const resolvers = {
     Query: {
         about: async () => {
-            const result = await db.contact.findAll({
+            const result = await db.about.findAll({
                 limit: 1,
                 order: [['updatedAt', 'DESC']],
             })
