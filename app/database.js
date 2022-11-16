@@ -38,6 +38,8 @@ let models = [
     require('./models/categories'),
     require('./models/subCategories'),
     require('./models/banner'),
+    require('./models/about'),
+    require('./models/contact'),
 ]
 
 // Initialize models

@@ -26,6 +26,8 @@ const server = new ApolloServer({
         require('./GraphQL/categories'),
         require('./GraphQL/subCategories'),
         require('./GraphQL/banner'),
+        require('./GraphQL/about'),
+        require('./GraphQL/contact'),
     ],
     playground: {
         settings: {
