@@ -27,5 +27,5 @@ export const withPermissions = (permissions, cb) => (obj, args, user, info) => {
     if (!user.permissions || !hasPermission(user.permissions, permissions)) {
         return new Error('Unauthorized')
     }
-    return cb()
+    return cb(obj, args, user, info)
 }
