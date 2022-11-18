@@ -75,6 +75,21 @@ export const resolvers = {
         deleteUser: withPermissions(
             [Permissions.DELETE_USER],
             async (context, args) => {
+                await db.rolesMapping.destroy({
+                    where: {
+                        userId: Number(args.id),
+                    },
+                })
+                await db.rolesMapping.destroy({
+                    where: {
+                        userId: Number(args.id),
+                    },
+                })
+                await db.auth.destroy({
+                    where: {
+                        userId: Number(args.id),
+                    },
+                })
                 return db.users.destroy({
                     where: {
                         id: Number(args.id),
