@@ -1,5 +1,6 @@
 import { gql } from 'apollo-server-express'
 import * as db from '../database'
+import { Permissions, withPermissions } from '../utils'
 
 export const typeDefs = gql`
     extend type Query {
@@ -14,21 +15,29 @@ export const typeDefs = gql`
         merchantMobileBannerUrls: String
     }
     extend type Mutation {
-        createBanner(bannerUrls: String!, merchantBannerUrls: String!, mobileBannerUrls: String!, merchantMobileBannerUrls: String!): Banner
+        createBanner(
+            bannerUrls: String!
+            merchantBannerUrls: String!
+            mobileBannerUrls: String!
+            merchantMobileBannerUrls: String!
+        ): Banner
     }
 `
 
 export const resolvers = {
     Query: {
-        banners: async (obj, args) =>   db.banners.findAll({
-            limit: args.limit,
-            order: [['updatedAt', 'DESC']],
-        })
+        banners: async (obj, args) =>
+            db.banners.findAll({
+                limit: args.limit,
+                order: [['updatedAt', 'DESC']],
+            }),
     },
     Mutation: {
-        createBanner: async (context, permission) => {
-            return db.banners.create(permission)
-        },
-       
+        createBanner: withPermissions(
+            [Permissions.CREATE_BANNER],
+            async (context, permission) => {
+                return db.banners.create(permission)
+            },
+        ),
     },
 }

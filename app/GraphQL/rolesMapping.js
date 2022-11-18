@@ -1,6 +1,7 @@
 import { gql } from 'apollo-server-express'
 import Query from 'sequelize/lib/dialects/mysql/query'
 import * as db from '../database'
+import { Permissions, withPermissions } from '../utils'
 export const typeDefs = gql`
     extend type Query {
         rolesMapping: [RoleMapping]
@@ -48,62 +49,71 @@ export const resolvers = {
         },
     },
     Mutation: {
-        createRoleMapping: async (context, roleMapping) => {
-            const newRoleMapping = {
-                ...roleMapping,
-                roleIds: roleMapping.roleIds.join(','),
-            }
+        createRoleMapping: withPermissions(
+            [Permissions.CREATE_USER_ROLE],
+            async (context, roleMapping) => {
+                const newRoleMapping = {
+                    ...roleMapping,
+                    roleIds: roleMapping.roleIds.join(','),
+                }
 
-            const roleMappingData = await db.rolesMapping.findOne({
-                where: {
-                    userId: roleMapping.userId,
-                },
-            })
-            if (roleMappingData) {
-                db.rolesMapping.update(newRoleMapping, {
+                const roleMappingData = await db.rolesMapping.findOne({
                     where: {
-                        id: roleMappingData.dataValues.id,
+                        userId: roleMapping.userId,
                     },
                 })
-                return {
-                    ...roleMappingData.dataValues,
-                    newRoleMapping,
+                if (roleMappingData) {
+                    db.rolesMapping.update(newRoleMapping, {
+                        where: {
+                            id: roleMappingData.dataValues.id,
+                        },
+                    })
+                    return {
+                        ...roleMappingData.dataValues,
+                        newRoleMapping,
+                    }
                 }
-            }
 
-            return db.rolesMapping.create(newRoleMapping)
-        },
-        editRoleMapping: async (context, { id, ...roleMapping }) => {
-            const newRoleMapping = {
-                ...roleMapping,
-                roleIds: roleMapping.roleIds.join(','),
-            }
+                return db.rolesMapping.create(newRoleMapping)
+            },
+        ),
+        editRoleMapping: withPermissions(
+            [Permissions.CREATE_USER_ROLE],
+            async (context, { id, ...roleMapping }) => {
+                const newRoleMapping = {
+                    ...roleMapping,
+                    roleIds: roleMapping.roleIds.join(','),
+                }
 
-            const roleMappingData = await db.rolesMapping.findOne({
-                where: {
-                    id: Number(id),
-                },
-            })
-            if (roleMappingData) {
-                db.rolesMapping.update(newRoleMapping, {
+                const roleMappingData = await db.rolesMapping.findOne({
                     where: {
-                        id: roleMappingData.dataValues.id,
+                        id: Number(id),
                     },
                 })
-                return {
-                    ...roleMappingData.dataValues,
-                    newRoleMapping,
+                if (roleMappingData) {
+                    db.rolesMapping.update(newRoleMapping, {
+                        where: {
+                            id: roleMappingData.dataValues.id,
+                        },
+                    })
+                    return {
+                        ...roleMappingData.dataValues,
+                        newRoleMapping,
+                    }
                 }
-            }
 
-            return new Error('Role Mapping does not exist')
-        },
-        deleteRoleMapping: async (context, args) => {
-            return db.rolesMapping.destroy({
-                where: {
-                    id: Number(args.id),
-                },
-            })
-        },
+                return new Error('Role Mapping does not exist')
+            },
+        ),
+        deleteRoleMapping: withPermissions(
+            [Permissions.CREATE_USER_ROLE],
+            async (context, args) => {
+                return db.rolesMapping.destroy({
+                    where: {
+                        id: Number(args.id),
+                    },
+                })
+            },
+        ),
     },
 }

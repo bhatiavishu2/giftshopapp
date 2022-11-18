@@ -1,7 +1,7 @@
 const db = require('./database')
 module.exports = async function (req, res, next) {
     try {
-        if (!req.user) {
+        if (!req.user && req?.body?.operationName !== 'IntrospectionQuery') {
             const token = req.headers['authorization']
             if (!token) {
                 next()

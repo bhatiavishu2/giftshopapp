@@ -1,5 +1,6 @@
 import { gql } from 'apollo-server-express'
 import * as db from '../database'
+import { Permissions, withPermissions } from '../utils'
 
 export const typeDefs = gql`
     extend type Query {
@@ -94,35 +95,44 @@ export const resolvers = {
         },
     },
     Mutation: {
-        createProduct: async (context, product) => {
-            const newProduct = {
-                ...product,
-                images: product.images.join(','),
-            }
-            return db.products.create(newProduct)
-        },
-        editProduct: async (context, { id, ...product }) => {
-            const dbProduct = await db.products.findByPk(Number(id))
-            // const newProduct = {
-            //     ...product,
-            //     images: dbProduct.images + ',' + product.images.join(','),
-            // }
-            const newProduct = {
-                ...product,
-                images: product.images.join(','),
-            }
-            return db.products.update(newProduct, {
-                where: {
-                    id,
-                },
-            })
-        },
-        deleteProduct: async (context, args) => {
-            return db.products.destroy({
-                where: {
-                    id: Number(args.id),
-                },
-            })
-        },
+        createProduct: withPermissions(
+            [Permissions.CREATE_PRODUCT],
+            async (context, product) => {
+                const newProduct = {
+                    ...product,
+                    images: product.images.join(','),
+                }
+                return db.products.create(newProduct)
+            },
+        ),
+        editProduct: withPermissions(
+            [Permissions.EDIT_PRODUCT],
+            async (context, { id, ...product }) => {
+                const dbProduct = await db.products.findByPk(Number(id))
+                // const newProduct = {
+                //     ...product,
+                //     images: dbProduct.images + ',' + product.images.join(','),
+                // }
+                const newProduct = {
+                    ...product,
+                    images: product.images.join(','),
+                }
+                return db.products.update(newProduct, {
+                    where: {
+                        id,
+                    },
+                })
+            },
+        ),
+        deleteProduct: withPermissions(
+            [Permissions.DELETE_PRODUCT],
+            async (context, args) => {
+                return db.products.destroy({
+                    where: {
+                        id: Number(args.id),
+                    },
+                })
+            },
+        ),
     },
 }

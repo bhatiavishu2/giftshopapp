@@ -1,5 +1,6 @@
 import { gql } from 'apollo-server-express'
 import * as db from '../database'
+import { Permissions, withPermissions } from '../utils'
 
 export const typeDefs = gql`
     extend type Query {
@@ -15,6 +16,8 @@ export const typeDefs = gql`
     }
     extend type Mutation {
         createSubCategory(name: String, category: String): SubCategory
+        editSubCategory(id: ID!, name: String, category: String): [Int]
+        deleteSubCategory(id: ID): Boolean
     }
 `
 
@@ -30,8 +33,31 @@ export const resolvers = {
         },
     },
     Mutation: {
-        createSubCategory: async (context, subCategory) => {
-            return db.subCategories.create(subCategory)
-        },
+        createSubCategory: withPermissions(
+            [Permissions.CREATE_CATEGORY],
+            async (context, subCategory) => {
+                return db.subCategories.create(subCategory)
+            },
+        ),
+        editSubCategory: withPermissions(
+            [Permissions.CREATE_CATEGORY],
+            async (context, { id, ...subCategory }) => {
+                return db.subCategories.update(subCategory, {
+                    where: {
+                        id,
+                    },
+                })
+            },
+        ),
+        deleteSubCategory: withPermissions(
+            [Permissions.CREATE_CATEGORY],
+            async (context, args) => {
+                return db.subCategories.destroy({
+                    where: {
+                        id: Number(args.id),
+                    },
+                })
+            },
+        ),
     },
 }

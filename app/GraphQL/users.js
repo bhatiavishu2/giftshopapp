@@ -1,5 +1,6 @@
 import { gql } from 'apollo-server-express'
 import * as db from '../database'
+import { Permissions, withPermissions } from '../utils'
 
 export const typeDefs = gql`
     extend type Query {
@@ -71,12 +72,15 @@ export const resolvers = {
                 },
             })
         },
-        deleteUser: async (context, args) => {
-            return db.users.destroy({
-                where: {
-                    id: Number(args.id),
-                },
-            })
-        },
+        deleteUser: withPermissions(
+            [Permissions.DELETE_USER],
+            async (context, args) => {
+                return db.users.destroy({
+                    where: {
+                        id: Number(args.id),
+                    },
+                })
+            },
+        ),
     },
 }

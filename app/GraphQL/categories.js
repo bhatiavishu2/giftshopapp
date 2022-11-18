@@ -1,5 +1,6 @@
 import { gql } from 'apollo-server-express'
 import * as db from '../database'
+import { Permissions, withPermissions } from '../utils'
 
 export const typeDefs = gql`
     extend type Query {
@@ -42,22 +43,31 @@ export const resolvers = {
         },
     },
     Mutation: {
-        createCategory: async (context, category) => {
-            return db.categories.create(category)
-        },
-        editCategory: async (context, { categoryId: id, ...category }) => {
-            return db.categories.update(category, {
-                where: {
-                    id,
-                },
-            })
-        },
-        deleteCategory: async (context, args) => {
-            return db.categories.destroy({
-                where: {
-                    id: Number(args.id),
-                },
-            })
-        },
+        createCategory: withPermissions(
+            [Permissions.CREATE_CATEGORY],
+            async (context, category) => {
+                return db.categories.create(category)
+            },
+        ),
+        editCategory: withPermissions(
+            [Permissions.EDIT_CATEGORY],
+            async (context, { categoryId: id, ...category }) => {
+                return db.categories.update(category, {
+                    where: {
+                        id,
+                    },
+                })
+            },
+        ),
+        deleteCategory: withPermissions(
+            [Permissions.DELETE_CATEGORY],
+            async (context, args) => {
+                return db.categories.destroy({
+                    where: {
+                        id: Number(args.id),
+                    },
+                })
+            },
+        ),
     },
 }

@@ -1,5 +1,6 @@
 import { gql } from 'apollo-server-express'
 import * as db from '../database'
+import { Permissions, withPermissions } from '../utils'
 
 export const typeDefs = gql`
     extend type Query {
@@ -26,8 +27,11 @@ export const resolvers = {
         },
     },
     Mutation: {
-        createContact: async (context, about) => {
-            return db.contact.create(about)
-        },
+        createContact: withPermissions(
+            [Permissions.CREATE_CONTACT_US],
+            async (context, about) => {
+                return db.contact.create(about)
+            },
+        ),
     },
 }

@@ -1,5 +1,6 @@
 import { gql } from 'apollo-server-express'
 import * as db from '../database'
+import { Permissions, withPermissions } from '../utils'
 
 export const typeDefs = gql`
     extend type Query {
@@ -42,30 +43,39 @@ export const resolvers = {
         },
     },
     Mutation: {
-        createRole: async (context, role) => {
-            const newRole = {
-                ...role,
-                permissions: role.permissions.join(','),
-            }
-            return db.roles.create(newRole)
-        },
-        editRole: async (context, { id, ...role }) => {
-            const newRole = {
-                ...role,
-                permissions: role.permissions.join(','),
-            }
-            return db.roles.update(newRole, {
-                where: {
-                    id,
-                },
-            })
-        },
-        deleteRole: async (context, args) => {
-            return db.roles.destroy({
-                where: {
-                    id: Number(args.id),
-                },
-            })
-        },
+        createRole: withPermissions(
+            [Permissions.CREATE_ROLE],
+            async (context, role) => {
+                const newRole = {
+                    ...role,
+                    permissions: role.permissions.join(','),
+                }
+                return db.roles.create(newRole)
+            },
+        ),
+        editRole: withPermissions(
+            [Permissions.CREATE_ROLE],
+            async (context, { id, ...role }) => {
+                const newRole = {
+                    ...role,
+                    permissions: role.permissions.join(','),
+                }
+                return db.roles.update(newRole, {
+                    where: {
+                        id,
+                    },
+                })
+            },
+        ),
+        deleteRole: withPermissions(
+            [Permissions.CREATE_ROLE],
+            async (context, args) => {
+                return db.roles.destroy({
+                    where: {
+                        id: Number(args.id),
+                    },
+                })
+            },
+        ),
     },
 }

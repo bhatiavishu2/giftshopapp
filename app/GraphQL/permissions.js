@@ -1,5 +1,6 @@
 import { gql } from 'apollo-server-express'
 import * as db from '../database'
+import { withPermissions, Permissions } from '../utils'
 
 export const typeDefs = gql`
     extend type Query {
@@ -25,22 +26,31 @@ export const resolvers = {
             db.permissions.findByPk(args.id),
     },
     Mutation: {
-        createPermission: async (context, permission) => {
-            return db.permissions.create(permission)
-        },
-        editPermission: async (context, { id, ...permission }) => {
-            return db.permissions.update(permission, {
-                where: {
-                    id,
-                },
-            })
-        },
-        deletePermission: async (context, args) => {
-            return db.permissions.destroy({
-                where: {
-                    id: Number(args.id),
-                },
-            })
-        },
+        createPermission: withPermissions(
+            [Permissions.CREATE_PERMISSION],
+            async (context, permission) => {
+                return db.permissions.create(permission)
+            },
+        ),
+        editPermission: withPermissions(
+            [Permissions.CREATE_PERMISSION],
+            async (context, { id, ...permission }) => {
+                return db.permissions.update(permission, {
+                    where: {
+                        id,
+                    },
+                })
+            },
+        ),
+        deletePermission: withPermissions(
+            [Permissions.CREATE_PERMISSION],
+            async (context, args) => {
+                return db.permissions.destroy({
+                    where: {
+                        id: Number(args.id),
+                    },
+                })
+            },
+        ),
     },
 }
