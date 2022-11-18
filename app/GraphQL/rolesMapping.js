@@ -16,6 +16,8 @@ export const typeDefs = gql`
     }
     extend type Mutation {
         createRoleMapping(roleIds: [String], userId: ID): RoleMapping
+        editRoleMapping(id: ID!, name: String, permissions: [String]): [Int]
+        deleteRoleMapping(id: ID): Boolean
     }
 `
 
@@ -70,6 +72,38 @@ export const resolvers = {
             }
 
             return db.rolesMapping.create(newRoleMapping)
+        },
+        editRoleMapping: async (context, { id, ...roleMapping }) => {
+            const newRoleMapping = {
+                ...roleMapping,
+                roleIds: roleMapping.roleIds.join(','),
+            }
+
+            const roleMappingData = await db.rolesMapping.findOne({
+                where: {
+                    id: Number(id),
+                },
+            })
+            if (roleMappingData) {
+                db.rolesMapping.update(newRoleMapping, {
+                    where: {
+                        id: roleMappingData.dataValues.id,
+                    },
+                })
+                return {
+                    ...roleMappingData.dataValues,
+                    newRoleMapping,
+                }
+            }
+
+            return new Error('Role Mapping does not exist')
+        },
+        deleteRoleMapping: async (context, args) => {
+            return db.rolesMapping.destroy({
+                where: {
+                    id: Number(args.id),
+                },
+            })
         },
     },
 }

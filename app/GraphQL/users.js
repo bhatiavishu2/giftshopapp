@@ -13,6 +13,7 @@ export const typeDefs = gql`
         name: String
         address: String
         companyName: String
+        userRoles: RoleMapping
     }
     extend type Mutation {
         createUser(
@@ -31,6 +32,8 @@ export const typeDefs = gql`
             address: String
             companyName: String
         ): [Int]
+
+        deleteUser(id: ID): Boolean
     }
 `
 
@@ -38,6 +41,15 @@ export const resolvers = {
     Query: {
         users: async () => db.users.findAll(),
         user: async (obj, args, context, info) => db.users.findByPk(args.id),
+    },
+    User: {
+        userRoles: async ({ dataValues }) => {
+            return db.rolesMapping.findOne({
+                where: {
+                    userId: dataValues.id,
+                },
+            })
+        },
     },
     Mutation: {
         createUser: async (context, user) => {
@@ -56,6 +68,13 @@ export const resolvers = {
             return db.users.update(newUser, {
                 where: {
                     id,
+                },
+            })
+        },
+        deleteUser: async (context, args) => {
+            return db.users.destroy({
+                where: {
+                    id: Number(args.id),
                 },
             })
         },
