@@ -77,12 +77,12 @@ export const resolvers = {
             async (context, args) => {
                 await db.rolesMapping.destroy({
                     where: {
-                        userId: Number(args.id),
+                        userId: args.id,
                     },
                 })
                 await db.auth.destroy({
                     where: {
-                        userId: Number(args.id),
+                        userId: args.id,
                     },
                 })
                 return db.users.destroy({
