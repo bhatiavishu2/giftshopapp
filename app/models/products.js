@@ -58,12 +58,7 @@ module.exports = function (sequelize, DataTypes) {
         },
         {
             tableName: 'products',
-            indexes: [
-                {
-                    unique: true,
-                    fields: ['name'],
-                },
-            ],
+            indexes: [],
         },
     )
     productsModel.sync()
