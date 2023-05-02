@@ -40,6 +40,7 @@ let models = [
     require('./models/banner'),
     require('./models/about'),
     require('./models/contact'),
+    require('./models/order'),
 ]
 
 // Initialize models
