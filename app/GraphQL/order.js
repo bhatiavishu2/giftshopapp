@@ -17,6 +17,7 @@ export const typeDefs = gql`
         orderRemarks: String
         shippingDetails: String
         initialPayment: String
+        uploadedPhotos: String
     }
     extend type Mutation {
         createOrder(
@@ -26,6 +27,7 @@ export const typeDefs = gql`
             orderRemarks: String
             shippingDetails: String
             initialPayment: String
+            uploadedPhotos: String
         ): Order
 
         deleteOrder(id: ID): Boolean
