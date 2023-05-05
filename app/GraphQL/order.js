@@ -60,18 +60,8 @@ export const resolvers = {
             })
         },
     },
-    Product: {
-        subCategoryDetails: async ({ dataValues }) => {
-            return await db.subCategories.findByPk(
-                Number(dataValues.subCategory),
-            )
-        },
-        images: async ({ dataValues }) => {
-            return dataValues.images.split(',')
-        },
-    },
     Mutation: {
-        createProduct: async (context, product) => {
+        createOrder: async (context, product) => {
             return db.orders.create(product)
         },
 
