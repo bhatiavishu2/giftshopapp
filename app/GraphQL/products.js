@@ -109,14 +109,14 @@ export const resolvers = {
             [Permissions.EDIT_PRODUCT],
             async (context, { id, ...product }) => {
                 const dbProduct = await db.products.findByPk(Number(id))
-                // const newProduct = {
-                //     ...product,
-                //     images: dbProduct.images + ',' + product.images.join(','),
-                // }
                 const newProduct = {
                     ...product,
-                    images: product.images.join(','),
+                    images: dbProduct.images + ',' + product.images.join(','),
                 }
+                // const newProduct = {
+                //     ...product,
+                //     images: product.images.join(','),
+                // }
                 return db.products.update(newProduct, {
                     where: {
                         id,
