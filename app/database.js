@@ -41,6 +41,7 @@ let models = [
     require('./models/about'),
     require('./models/contact'),
     require('./models/order'),
+    require('./models/customOrder'),
 ]
 
 // Initialize models
